@@ -25,7 +25,7 @@
 Summary:	Package that installs %{scl}
 Name:		%{scl}
 Version:	2.2
-Release:	3%{?dist}
+Release:	4%{?dist}
 License:	GPLv2+
 Group:		Applications/File
 # template of man page with RPM macros to be expanded
@@ -36,7 +36,7 @@ Requires:	scl-utils
 Requires:	%{?scl_prefix}mongodb-server
 BuildRequires:	scl-utils-build, help2man
 BuildRequires:  rh-java-common-javapackages-tools
-BuildRequires:	maven30-scldevel
+BuildRequires:	rh-maven33-scldevel
 BuildRequires:	rh-java-common-scldevel
 BuildRequires:  golang
 
@@ -77,7 +77,8 @@ Package shipping essential configuration macros to build
 Summary:	Package shipping development files for %{scl}.
 Group:		Applications/File
 Requires:       %{name}-runtime = %{version}
-Requires:       maven30-scldevel
+#Requires:       %{scl_prefix_maven}-scldevel
+Requires:       rh-maven33-scldevel
 
 %description scldevel
 Development files for %{scl} (useful e.g. for hierarchical collection
@@ -325,6 +326,9 @@ restorecon -R %{_localstatedir} >/dev/null 2>&1 || :
 %{_root_sysconfdir}/rpm/macros.%{scl_name_base}-scldevel
 
 %changelog
+* Mon Feb 8 2016 Marek Skalicky <mskalick@redhat.com> - 2.2-4
+- Now using rh-maven33 SCL
+
 * Wed Jan 27 2016 Marek Skalicky <mskalick@redhat.com> - 2.2-3
 - Added GOPATH to able to use a golang packages in this SCL
 
