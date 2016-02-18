@@ -25,7 +25,7 @@
 Summary:	Package that installs %{scl}
 Name:		%{scl}
 Version:	2.2
-Release:	5%{?dist}
+Release:	6%{?dist}
 License:	GPLv2+
 Group:		Applications/File
 # template of man page with RPM macros to be expanded
@@ -322,6 +322,7 @@ restorecon -R %{_localstatedir} >/dev/null 2>&1 || :
 # Directories for golang code (requrements of mongo-tools)
 %dir %{_datadir}/gocode
 %dir %{_datadir}/gocode/src
+%dir %{_javadocdir}
 
 %files build
 %doc LICENSE
@@ -332,6 +333,9 @@ restorecon -R %{_localstatedir} >/dev/null 2>&1 || :
 %{_root_sysconfdir}/rpm/macros.%{scl_name_base}-scldevel
 
 %changelog
+* Mon Feb 8 2016 Marek Skalicky <mskalick@redhat.com> - 2.2-6
+- Add javadocdir ownership
+
 * Mon Feb 8 2016 Marek Skalicky <mskalick@redhat.com> - 2.2-5
 - Fix ownership of golang src directory
 
