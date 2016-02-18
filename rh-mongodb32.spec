@@ -25,7 +25,7 @@
 Summary:	Package that installs %{scl}
 Name:		%{scl}
 Version:	2.2
-Release:	4%{?dist}
+Release:	5%{?dist}
 License:	GPLv2+
 Group:		Applications/File
 # template of man page with RPM macros to be expanded
@@ -37,7 +37,6 @@ Requires:	%{?scl_prefix}mongodb-server
 BuildRequires:	scl-utils-build, help2man
 BuildRequires:  rh-java-common-javapackages-tools
 BuildRequires:	rh-maven33-scldevel
-BuildRequires:	rh-java-common-scldevel
 BuildRequires:  golang
 
 %description
@@ -276,6 +275,10 @@ install -p -m 644 %{?scl_name}.7 %{buildroot}%{_mandir}/man7/
 # create directory for license
 install -d -m 755 %{buildroot}%{_licensedir}
 
+# create directory for golang code
+install -d -m 755 %{buildroot}%{_datadir}/gocode
+install -d -m 755 %{buildroot}%{_datadir}/gocode/src
+
 # generate rpm macros file for depended collections
 cat << EOF | tee -a %{buildroot}%{_root_sysconfdir}/rpm/macros.%{scl_name_base}-scldevel
 %%scl_%{scl_name_base} %{?scl}
@@ -316,6 +319,9 @@ restorecon -R %{_localstatedir} >/dev/null 2>&1 || :
 %config(noreplace) %{_sysconfdir}/xdg/xmvn/configuration.xml
 %config(noreplace) %{_sysconfdir}/java/javapackages-config.json
 %{_mandir}/man7/%{?scl_name}.*
+# Directories for golang code (requrements of mongo-tools)
+%dir %{_datadir}/gocode
+%dir %{_datadir}/gocode/src
 
 %files build
 %doc LICENSE
@@ -326,6 +332,9 @@ restorecon -R %{_localstatedir} >/dev/null 2>&1 || :
 %{_root_sysconfdir}/rpm/macros.%{scl_name_base}-scldevel
 
 %changelog
+* Mon Feb 8 2016 Marek Skalicky <mskalick@redhat.com> - 2.2-5
+- Fix ownership of golang src directory
+
 * Mon Feb 8 2016 Marek Skalicky <mskalick@redhat.com> - 2.2-4
 - Now using rh-maven33 SCL
 
