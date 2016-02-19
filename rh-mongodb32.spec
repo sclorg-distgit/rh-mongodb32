@@ -25,7 +25,7 @@
 Summary:	Package that installs %{scl}
 Name:		%{scl}
 Version:	2.2
-Release:	6%{?dist}
+Release:	7%{?dist}
 License:	GPLv2+
 Group:		Applications/File
 # template of man page with RPM macros to be expanded
@@ -120,6 +120,19 @@ cat <<EOF >configuration.xml
       <properties>
         <prefix>${ROOT_NOSLASH}</prefix>
         <namespace>%{scl}</namespace>
+      </properties>
+      <configuration>
+        <repositories>
+          <repository>base-resolve</repository>
+        </repositories>
+      </configuration>
+    </repository>
+    <repository>
+      <id>resolve-rh-maven33</id>
+      <type>compound</type>
+      <properties>
+        <prefix>opt/rh/rh-maven33/root</prefix>
+        <namespace>rh-maven33</namespace>
       </properties>
       <configuration>
         <repositories>
@@ -333,7 +346,10 @@ restorecon -R %{_localstatedir} >/dev/null 2>&1 || :
 %{_root_sysconfdir}/rpm/macros.%{scl_name_base}-scldevel
 
 %changelog
-* Mon Feb 8 2016 Marek Skalicky <mskalick@redhat.com> - 2.2-6
+* Thu Feb 18 2016 Marek Skalicky <mskalick@redhat.com> - 2.2-7
+- Fixed xmvn configuration
+
+* Tue Feb 16 2016 Marek Skalicky <mskalick@redhat.com> - 2.2-6
 - Add javadocdir ownership
 
 * Mon Feb 8 2016 Marek Skalicky <mskalick@redhat.com> - 2.2-5
